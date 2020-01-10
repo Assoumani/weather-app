@@ -19,9 +19,9 @@
             <div class="list-group">
                 <?php foreach ($cities["cities"] as $city) { ?>
                     <form method="post" action="">
-                        <input type="text" class="form-control" name="city" id="exampleInputEmail1" value="<?= $city ?>" hidden>
+                        <input type="text" class="form-control" name="city" id="exampleInputEmail1" value="<?= filter_var($city,FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?>" hidden>
                         <button type="submit" class="list-group-item list-group-item-action">
-                            <?= $city ?>
+                            <?= filter_var($city, FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?>
                         </button>
                     </form>
                 <?php } ?>
@@ -29,13 +29,13 @@
         </div>
         <div class="container col-md-8">
             <div class="alert alert-danger mt-3" role="alert" <?= isset($message) ? "" : "hidden" ?>>
-                <?= $message ?>
+                <?= filter_var($message, FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?>
             </div>
             <form method="post" action="">
                 <div class="form-group">
                     <label for="exampleInputEmail1">City</label>
                     <input type="text" class="form-control" name="city" id="exampleInputEmail1"
-                           value="<?= isset($_POST["city"]) ? filter_var(
+                           value="<?= isset(filter_input_array(INPUT_POST)["city"]) ? filter_var(
                                $_POST["city"],
                                FILTER_SANITIZE_FULL_SPECIAL_CHARS
                            ) : "" ?>">
@@ -44,10 +44,10 @@
             </form>
             <div class="card mt-3 d-flex justify-content-center" style="width: 18rem;">
                 <div class="card-body" <?= isset($message) ? "hidden" : "" ?>>
-                    <p class="card-text">City: <?= $response->getCity() ?></p>
-                    <p class="card-text">Degree: <?= $response->getTemperature() ?> °C</p>
-                    <p class="card-text">Description: <?= $response->getDescription() ?></p>
-                    <p class="card-text"><?= $response->getIcon() ?></p>
+                    <p class="card-text">City: <?= filter_var($response->getCity(), FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?></p>
+                    <p class="card-text">Degree: <?= filter_var($response->getTemperature(), FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?> °C</p>
+                    <p class="card-text">Description: <?= filter_var($response->getDescription(), FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?></p>
+                    <p class="card-text"><?= filter_var($response->getIcon(), FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?></p>
                 </div>
             </div>
         </div>
