@@ -21,7 +21,7 @@ class WeatherController
     {
         try {
             $city = new City();
-            $city->setCity($_POST['city']);
+            $city->setCity(filter_input_array(INPUT_POST));
             $city2 = $city->getCity();
             $form = new WeatherForm();
             if ($form->verify($city) == true) {
@@ -42,7 +42,7 @@ class WeatherController
             $message = "le service n'est pas disponible. Contactez l'administrateur!";
             include __DIR__ . '/../../View/defaultView.php';
         } catch (\InvalidArgumentException $exception) {
-            $message = "la ville : \"" . $_POST["city"] . "\" n'a pas été retrouvée";
+            $message = "la ville : \"" . filter_input_array(INPUT_POST)["city"] . "\" n'a pas été retrouvée";
             include __DIR__ . '/../../View/defaultView.php';
         } catch (\TypeError $exception) {
             $message = "Veuillez remplir le champ";
