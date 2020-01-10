@@ -35,8 +35,8 @@ class WeatherService
 
     public function getGeoLoc()
     {
-        $ip = json_decode(@file_get_contents('http://edns.ip-api.com/json'));
-        $coordonnees = json_decode(@file_get_contents('http://ip-api.com/json/' . $ip->dns->ip));
+        $ipLocated = json_decode(@file_get_contents('http://edns.ip-api.com/json'));
+        $coordonnees = json_decode(@file_get_contents('http://ip-api.com/json/' . $ipLocated->dns->ip));
         $contents = @file_get_contents('http://api.openweathermap.org/data/2.5/weather?lat=' . $coordonnees->lat . '&lon=' . $coordonnees->lon . '&APPID=549f708df3e97234deb5a24296a9e9dc');
         $status_line = $http_response_header[0];
         preg_match('{HTTP\/\S*\s(\d{3})}', $status_line, $match);
